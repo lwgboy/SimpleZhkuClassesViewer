@@ -8,9 +8,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stu_id" />
+
+            <EditText
+                android:id="@+id/stu_id"
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:text="201010214312" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stu_psw" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:password="true"
+                android:text="3338957"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test" />
+    </LinearLayout>
 
 </RelativeLayout>
