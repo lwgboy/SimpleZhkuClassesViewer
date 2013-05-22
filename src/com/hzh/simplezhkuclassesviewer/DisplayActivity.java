@@ -13,6 +13,7 @@ import android.widget.SimpleAdapter;
 import com.hzh.bean.CourseBean;
 import com.hzh.service.CourseAdapter;
 import com.hzh.service.CourseService;
+import com.hzh.util.HtmlUtil;
 
 public class DisplayActivity extends Activity {
 
@@ -31,7 +32,7 @@ public class DisplayActivity extends Activity {
 		List<CourseBean> list = new ArrayList<CourseBean>();
 		for(int i = 0; i < data.size(); i++) {
 			CourseBean week = new CourseBean();
-			week.setClassName( "星期" + CourseService.WEEK_DAY[i]);
+			week.setClassName( "星期" + HtmlUtil.WEEK_DAY[i]);
 			list.add(week);
 			
 			for (CourseBean course : this.data.get(String.valueOf(i))) {
@@ -49,7 +50,7 @@ public class DisplayActivity extends Activity {
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		for(int i = 0; i < data.size(); i++) {
 			HashMap<String, Object> week = new HashMap<String, Object>();
-			week.put("dayWeek", "星期" + CourseService.WEEK_DAY[i]);
+			week.put("dayWeek", "星期" + HtmlUtil.WEEK_DAY[i]);
 			list.add(week);
 			
 			for (CourseBean course : this.data.get(String.valueOf(i))) {

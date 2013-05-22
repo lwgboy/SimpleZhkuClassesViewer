@@ -10,5 +10,6 @@
     <string name="testDownLoad">测试下载！</string>
     <string name="testView">测试查看课表！</string>
     <string name="title_activity_display">DisplayActivity</string>
+    <string name="title_activity_term_select">TermSelectActivity</string>
 
 </resources>

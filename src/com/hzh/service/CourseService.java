@@ -16,12 +16,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.hzh.bean.CourseBean;
+import com.hzh.bean.TermBean;
 import com.hzh.exception.TermNoExitsExcpetinon;
+import com.hzh.util.HtmlUtil;
+import com.hzh.util.MyStringUtil;
 
 public class CourseService {
 
-	public static final String[] WEEK_DAY = { "一", "二", "三", "四", "五", "六", "日" };
-	public static final String[] TERM_NAME = { "一", "二" };
 
 	private DBHelper dbHelper;
 
@@ -40,7 +41,7 @@ public class CourseService {
 	 */
 	public Map<String, List<CourseBean>> saveTerm(String stuID, String term,
 			String html) throws TermNoExitsExcpetinon {
-		Map<String, List<CourseBean>> courses = html2courses(html, stuID, term);
+		Map<String, List<CourseBean>> courses = HtmlUtil.html2courses(html, stuID, term);
 		
 		if(courses == null) throw new TermNoExitsExcpetinon();
 
@@ -59,13 +60,9 @@ public class CourseService {
 		values.put("ower_id", stuID);
 		values.put("term_id ", term);
 
-		StringBuilder termName = new StringBuilder();
-		termName.append(term.subSequence(0, 4));
-		termName.append("-");
-		termName.append(Integer.parseInt(term.subSequence(0, 4).toString()) + 1);
-		termName.append("学年第" + TERM_NAME[term.charAt(4) - '0'] + "学期");
+		String termName = MyStringUtil.termId2Chinese(term);
 
-		values.put("term_name", termName.toString());
+		values.put("term_name", termName);
 
 
 		db.insert("user", "ower_id", values);
@@ -80,107 +77,8 @@ public class CourseService {
 		return courses;
 	}
 
+	
 
-	/**
-	 * 转换html到CourseBean集合
-	 * @param term 
-	 * @param stuID 
-	 * 
-	 * @param html网页
-	 * @return
-	 */
-	public Map<String, List<CourseBean>> html2courses(String html, String stuID, String term) {
-		Document doc = Jsoup.parse(html);
-		Element es;
-		try {
-			es = doc.select("table").get(3);
-		} catch (Exception e1) {
-			return null;
-		}
-		
-		StringBuilder[] classes = new StringBuilder[7];
-		for (int i = 0; i < classes.length; i++) {
-			classes[i] = new StringBuilder();
-		}
-
-		for (Element e : es.select("td")) {
-			String text = e.text();
-			if (!"".equals(text.trim())) {
-				if (text.contains("]一[")) {
-					classes[0]
-							.append(text.replaceAll("\\[\\d{6}\\]", "") + " ");
-
-				} else if (text.contains("]二[")) {
-					classes[1]
-							.append(text.replaceAll("\\[\\d{6}\\]", "") + " ");
-
-				} else if (text.contains("]三[")) {
-					classes[2]
-							.append(text.replaceAll("\\[\\d{6}\\]", "") + " ");
-
-				} else if (text.contains("]四[")) {
-					classes[3]
-							.append(text.replaceAll("\\[\\d{6}\\]", "") + " ");
-
-				} else if (text.contains("]五[")) {
-					classes[4]
-							.append(text.replaceAll("\\[\\d{6}\\]", "") + " ");
-
-				} else if (text.contains("]六[")) {
-					classes[5]
-							.append(text.replaceAll("\\[\\d{6}\\]", "") + " ");
-
-				} else if (text.contains("]日[")) {
-					classes[6]
-							.append(text.replaceAll("\\[\\d{6}\\]", "") + " ");
-				}
-			}
-		}
-
-		Map<String, List<CourseBean>> courses = new HashMap<String, List<CourseBean>>();
-
-		for (int i = 0; i < 7; i++) {
-			List<CourseBean> coursesList = courseToList(classes[i].toString(), i, stuID, term);
-			courses.put(i + "", coursesList);
-		}
-
-		Log.i(MainService.TAG, "ok!");
-		Log.i(MainService.TAG, courses.toString());
-		return courses;
-
-	}
-
-	/**
-	 * 格式化html数据到courseBean
-	 * 
-	 * @param courses 某天的课程
-	 * @param day某一天
-	 * @return 某一天课程Bean的集合
-	 */
-	private List<CourseBean> courseToList(String courses, int day, String stuID, String term) {
-		List<CourseBean> coursesList = new ArrayList<CourseBean>();
-		if (courses.length() == 0)
-			return coursesList;
-		String[] coursesArray = courses.split(" ");
-		int dayNo = 0;
-		for (int i = 0; i < coursesArray.length; i += 4) {
-			CourseBean course = new CourseBean();
-			course.setClassName(coursesArray[i]);
-			course.setTeacherName(coursesArray[i + 1]);
-			String weeks = coursesArray[i + 2].substring(0, coursesArray[i + 2].indexOf(WEEK_DAY[day]));
-			String numofclass = coursesArray[i + 2].substring(coursesArray[i + 2].indexOf(WEEK_DAY[day]) + 1, coursesArray[i + 2].length());
-			course.setWeeks(weeks);
-			course.setClasses(numofclass);
-			course.setClassroom(coursesArray[i + 3]);
-			course.setDayNo(String.valueOf(dayNo));
-			course.setDayWeek(String.valueOf(day));
-			course.setOwerId(stuID);
-			course.setTermId(term);
-			coursesList.add(course);
-			dayNo++;
-		}
-		return coursesList;
-	}
 
 	/**
 	 * 保存一个bean到数据库,转换中间
@@ -303,5 +201,18 @@ public class CourseService {
 		return null;
 	}
 	 
+	public List<TermBean> getAllTerm(String owerId) {
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		Cursor cursor = db.rawQuery("select * from user where ower_id=?", new String[] {owerId});
+		List<TermBean> list = new ArrayList<TermBean>();
+		while(cursor.moveToNext()) {
+			int id = cursor.getInt(cursor.getColumnIndex("_id"));
+			String termId = cursor.getString(cursor.getColumnIndex("term_id"));
+			list.add(new TermBean(id, owerId, termId, TermBean.BY_ID));
+		}
+		cursor.close();
+		db.close();
+		return list;
+	}
 
 }
