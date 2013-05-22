@@ -203,7 +203,7 @@ public class CourseService {
 	 
 	public List<TermBean> getAllTerm(String owerId) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
-		Cursor cursor = db.rawQuery("select * from user where ower_id=?", new String[] {owerId});
+		Cursor cursor = db.rawQuery("select * from user where ower_id=? order by term_id desc", new String[] {owerId});
 		List<TermBean> list = new ArrayList<TermBean>();
 		while(cursor.moveToNext()) {
 			int id = cursor.getInt(cursor.getColumnIndex("_id"));
