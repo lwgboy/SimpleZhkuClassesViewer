@@ -6,7 +6,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="stu_id">请输入学生号：</string>
     <string name="stu_psw">请输入密码：</string>
-    <string name="test">测试！</string>
+    <string name="stu_term">请输入学期：</string>
+    <string name="testDownLoad">测试下载！</string>
+    <string name="testView">测试查看课表！</string>
     <string name="title_activity_display">DisplayActivity</string>
 
 </resources>

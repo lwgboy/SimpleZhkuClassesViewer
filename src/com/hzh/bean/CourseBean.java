@@ -10,6 +10,40 @@ public class CourseBean implements Serializable{
 	String weeks;
 	String classes;
 	String classroom;
+	
+	String dayNo;
+	String dayWeek;
+	
+	String termId;
+	String owerId;
+	
+	
+	
+	
+	public String getTermId() {
+		return termId;
+	}
+	public void setTermId(String termId) {
+		this.termId = termId;
+	}
+	public String getOwerId() {
+		return owerId;
+	}
+	public void setOwerId(String owerId) {
+		this.owerId = owerId;
+	}
+	public String getDayNo() {
+		return dayNo;
+	}
+	public void setDayNo(String dayNo) {
+		this.dayNo = dayNo;
+	}
+	public String getDayWeek() {
+		return dayWeek;
+	}
+	public void setDayWeek(String dayWeek) {
+		this.dayWeek = dayWeek;
+	}
 	public int getClassId() {
 		return classId;
 	}
@@ -46,8 +80,11 @@ public class CourseBean implements Serializable{
 	public void setClassroom(String classroom) {
 		this.classroom = classroom;
 	}
+	
+	
 	public CourseBean(int classId, String className, String teacherName,
-			String weeks, String classes, String classroom) {
+			String weeks, String classes, String classroom, String dayNo,
+			String dayWeek, String termId, String owerId) {
 		super();
 		this.classId = classId;
 		this.className = className;
@@ -55,8 +92,11 @@ public class CourseBean implements Serializable{
 		this.weeks = weeks;
 		this.classes = classes;
 		this.classroom = classroom;
+		this.dayNo = dayNo;
+		this.dayWeek = dayWeek;
+		this.termId = termId;
+		this.owerId = owerId;
 	}
-	
 	public CourseBean() {
 		// TODO Auto-generated constructor stub
 	}
@@ -64,7 +104,11 @@ public class CourseBean implements Serializable{
 	public String toString() {
 		return "CourseBean [classId=" + classId + ", className=" + className
 				+ ", teacherName=" + teacherName + ", weeks=" + weeks
-				+ ", classes=" + classes + ", classroom=" + classroom + "]";
+				+ ", classes=" + classes + ", classroom=" + classroom
+				+ ", dayNo=" + dayNo + ", dayWeek=" + dayWeek + ", termId="
+				+ termId + ", owerId=" + owerId + "]";
 	}
+	
+	
 	
 }

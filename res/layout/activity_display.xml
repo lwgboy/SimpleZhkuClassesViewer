@@ -5,7 +5,7 @@
     tools:context=".DisplayActivity" >
 
     <ListView
-        android:id="@+id/day_listView"
+        android:id="@+id/listView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
         

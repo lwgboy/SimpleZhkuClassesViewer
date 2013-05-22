@@ -19,7 +19,11 @@ import com.hzh.exception.NameOrPasswordExcpetion;
 
 public class HttpService {
 
-	private HttpClient client = new DefaultHttpClient();
+	private HttpClient client;
+	public HttpService() {
+		client = new DefaultHttpClient();
+		client.getParams().setIntParameter("http.socket.timeout",3000);
+	}
 	
 	public  HttpResponse sendPostRequest(HttpClient client2,
 			String url, Map<String, String> p) throws IOException {
@@ -32,7 +36,6 @@ public class HttpService {
 
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(par, "GBK");
 		HttpPost post = new HttpPost(url);
-
 		post.setHeader("Content-Type", "application/x-www-form-urlencoded");
 		post.setEntity(entity);
 
@@ -50,7 +53,7 @@ public class HttpService {
 		return this.sendPostRequest(this.client, url, p);
 	}
 
-	public String getcoures2Html(String stuID, String password) throws IOException, NameOrPasswordExcpetion {
+	public String getcoures2Html(String stuID, String password, String term) throws IOException, NameOrPasswordExcpetion {
 		String url = "http://jw.zhku.edu.cn/jwmis/_data/index_LOGIN.aspx";
 		Map<String, String> p = new HashMap<String, String>();
 		p.put("Sel_Type", "STU");
@@ -70,7 +73,8 @@ public class HttpService {
 		 */
 		url = "http://jw.zhku.edu.cn/jwmis/znpk/Pri_StuSel_rpt.aspx";
 		p.clear();
-		p.put("Sel_XNXQ", "20121");
+//		p.put("Sel_XNXQ", "20121");
+		p.put("Sel_XNXQ", term);
 		p.put("rad", "0");
 		p.put("px", "0");
 

@@ -22,9 +22,7 @@ public class DisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display);
-
-		data = (HashMap<String, List<CourseBean>>) this.getIntent()
-				.getSerializableExtra("courses");
+		data = (HashMap<String, List<CourseBean>>) this.getIntent().getSerializableExtra("courses");
 
 		showCourses();
 	}
@@ -43,7 +41,7 @@ public class DisplayActivity extends Activity {
 		
 		CourseAdapter adapter = new CourseAdapter(list, this, R.layout.coursev_view_each);
 		
-		ListView listView = (ListView)this.findViewById(R.id.day_listView);
+		ListView listView = (ListView)this.findViewById(R.id.listView);
 		listView.setAdapter(adapter);
 	}
 
@@ -69,7 +67,7 @@ public class DisplayActivity extends Activity {
 													new String[] { "className", "TeacherName", "weeks", "classes", "classroom" },
 													new int[] {R.id.course_name, R.id.course_teacher, R.id.course_weeks, R.id.course_classes, R.id.course_classroom });
 		
-		ListView listView = (ListView)this.findViewById(R.id.day_listView);
+		ListView listView = (ListView)this.findViewById(R.id.listView);
 		listView.setAdapter(adapter);
 	}
 
