@@ -145,6 +145,7 @@ public class MainActivity extends Activity {
 								Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
 								intent.putExtra("courses", data);
 								startActivity(intent);
+								//MainActivity.this.overridePendingTransition(R.anim.enter_alpha, R.anim.exit_alpha);
 							} else {
 								Toast.makeText(MainActivity.this, "¿Î±í²»´æÔÚ£¡", Toast.LENGTH_SHORT).show();
 							}										

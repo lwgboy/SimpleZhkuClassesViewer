@@ -25,8 +25,8 @@ import com.hzh.util.HtmlUtil;
 public class HttpService {
 
 	private HttpClient client;
-	private int timeoutConnection = 3000;  
-	private int timeoutSocket = 5000;
+	private int timeoutConnection = 10000;  
+	private int timeoutSocket = 10000;
 	private BasicHttpParams httpParameters;  
 	
 	private String[] termIDs;  // 登陆时顺便取出来的

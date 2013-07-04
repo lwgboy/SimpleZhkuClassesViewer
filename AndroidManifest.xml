@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name="com.hzh.simplezhkuclassesviewer.DisplayActivity"
-            android:label="@string/title_activity_display" >
+            android:label="@string/title_activity_display">
         </activity>
         <activity
             android:name="com.hzh.simplezhkuclassesviewer.TermSelectActivity"
